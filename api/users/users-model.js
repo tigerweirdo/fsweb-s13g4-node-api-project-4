@@ -1,59 +1,34 @@
-const { nanoid } = require("nanoid");
+const { v4: uuidv4 } = require('uuid');
 
-function createId() {
-  return nanoid();
+function getId(){
+    return uuidv4();
 }
 
-const initialUsers = () => {
-  let initialUserList = [
-    { id: createId(), kullaniciadi: "mete", sifre: "123456" },
-    { id: createId(), kullaniciadi: "mete1", sifre: "123456" },
-    { id: createId(), kullaniciadi: "mete2", sifre: "123456" },
-    { id: createId(), kullaniciadi: "mete3", sifre: "123456" },
-  ];
-  return initialUserList;
-};
+let allUsers = [
+    {id:getId(),username:"mete",password:"1234"},
+    {id:getId(),username:"mete2",password:"1234"},
+];
 
-let users = initialUsers();
-
-const getAllUsers = () => {
-  return users;
-};
-
-const createUser = (user) => {
-  user.id = createId();
-  users.push(user);
-  return Promise.resolve(user);
-};
-
-const findUser = (user) => {
-  let isExistUser = false;
-  let existUser = users.find(
-    (userItem) =>
-      userItem.kullaniciadi === user.kullaniciadi &&
-      userItem.sifre === user.sifre
-  );
-  if (findUser) {
-    isExistUser = true;
-    //return isExistUser;
-  }
-  return isExistUser;
-};
-
-const checkUserName = (kullaniciadi) => {
-  let isExistUserName = false;
-  for (let i = 0; i < users.length; i++) {
-    const userItem = users[i];
-    if (userItem.kullaniciadi == kullaniciadi) {
-      isExistUserName = true;
-      break;
+function getAllUsers(){
+    return allUsers;
+}
+function insertUser(user){
+    user.id = getId();
+    allUsers.push(user);
+    return user;
+}
+function login(user){
+    let existUser = null;
+    for (let i = 0; i < allUsers.length; i++) {
+        const item = allUsers[i];
+        if(item.username === user.username && item.password === user.password){
+            existUser = item;
+            break;
+        }
     }
-  }
-  return isExistUserName;
-};
-module.exports = {
-  getAllUsers,
-  createUser,
-  findUser,
-  checkUserName,
-};
+    return existUser;
+}
+
+module.exports =  {
+    getAllUsers,insertUser,login
+}

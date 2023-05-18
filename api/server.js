@@ -1,15 +1,15 @@
 const express = require("express");
+
 const server = express();
-const usersRouter = require("../api/users/users-router");
-const { logger } = require("./users/users-middleware");
+const router = require("./users/users-router");
 
-server.use(express.json());
 
-server.use("/api/users", usersRouter);
-server.use(logger);
+server.use(express.json());//json istekleri destekler.
 
-server.get("/", (req, res) => {
-  res.send("Başlıyoruz");
+server.use("/api",router);
+
+server.get("/",(req,res)=>{
+    res.json({message:"express is working"});
 });
 
 module.exports = server;

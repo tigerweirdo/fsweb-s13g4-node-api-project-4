@@ -1,49 +1,44 @@
-const {
-    getAllUsers,
-    createUser,
-    findUser,
-    checkUserName,
-  } = require("./users-model");
-  
-  function logger(req, res, next) {
-    const method = req.method;
-    const url = req.originalUrl;
-    const timestamp = new Date().toLocaleString();
-    console.log(`${method}--${url}--${timestamp}`);
-    next();
-  }
-  
-  function validateInput(req, res, next) {
-    const { kullaniciadi, sifre } = req.body;
-    if (!kullaniciadi || !sifre) {
-      res.status(400).json({ message: "Eksik alan var" });
-    } else {
-      next();
+const userModel = require("./users-model");
+
+function validatePaylod(req,res,next){
+    try {
+        let {username, password} = req.body;
+        if(!username || !password){
+            res.status(400).json({message:"girilen alanları kontrol ediniz"});
+        }else{
+            next();
+        }
+    } catch (error) {
+        next(error);
     }
-  }
-  
-  function validateNewUser(req, res, next) {
-    const { kullaniciadi, sifre } = req.body;
-    let isExistUserName = checkUserName(kullaniciadi);
-    if (isExistUserName) {
-      res
-        .status(400)
-        .json({ message: `${kullaniciadi} daha önce kullanılmıştır.` });
-    } else {
-      req.user = { kullaniciadi: kullaniciadi, sifre: sifre };
-      next();
+}
+
+function validateUserNameIsUnique(req,res,next){
+    try {
+        let {username} = req.body;
+        const isExist = userModel.getAllUsers().find(item=>item.username === username);
+        if(isExist){
+            res.status(400).json({message:"aynı kullanıcı adı mevcut."});
+        }else{
+            next();
+        }
+    } catch (error) {
+        next(error)
     }
-  }
-  
-  function validateLoginUser(req, res, next) {
-    const { kullaniciadi, sifre } = req.body;
-    let isExistUser = findUser({ kullaniciadi: kullaniciadi, sifre: sifre });
-    if (!isExistUser) {
-      res.status(404).json({ message: "Böyle bir kullanıcı adı yok" });
-    } else {
-      req.user = { kullaniciadi: kullaniciadi, sifre: sifre };
-      next();
+}
+
+function validateLogin(req,res,next){
+    try {
+        let {username,password} = req.body;
+        const isExist = userModel.getAllUsers().find(item=>item.username === username && item.password == password);
+        if(!isExist){
+            res.status(400).json({message:"giriş bilgilerinizde hata var."});
+        }else{
+            next();
+        }
+    } catch (error) {
+        next(error);
     }
-  }
-  
-  module.exports = { logger, validateInput, validateNewUser, validateLoginUser };
+}
+
+module.exports = {validatePaylod,validateUserNameIsUnique,validateLogin}
