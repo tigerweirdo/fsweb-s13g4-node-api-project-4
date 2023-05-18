@@ -18,7 +18,7 @@
   "bugs": {
     "url": "https://github.com/tigerweirdo/fsweb-s13g4-node-api-project-4/issues"
   },
-  "homepage": "https://github.com/erdemci/fsweb-s13g4-node-api-project-4#readme",
+  "homepage": "https://github.com/tigerweirdo/fsweb-s13g4-node-api-project-4#readme",
   "devDependencies": {
     "eslint": "^8.40.0",
     "nodemon": "^2.0.22"
