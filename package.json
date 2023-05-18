@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/erdemci/fsweb-s13g4-node-api-project-4.git"
+    "url": "git+https://github.com/tigerweirdo/fsweb-s13g4-node-api-project-4.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/erdemci/fsweb-s13g4-node-api-project-4/issues"
+    "url": "https://github.com/tigerweirdo/fsweb-s13g4-node-api-project-4/issues"
   },
   "homepage": "https://github.com/erdemci/fsweb-s13g4-node-api-project-4#readme",
   "devDependencies": {
